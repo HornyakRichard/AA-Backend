@@ -13,7 +13,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.richard.AssecoTest.common.JsonFileReader.readFileAsString;
-import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,7 +27,7 @@ public class AuthControllerTest {
     @Test
     public void authenticateReturnOk() throws Exception {
 
-        final MvcResult result = mockMvc.perform(
+        mockMvc.perform(
                 MockMvcRequestBuilders.post("/authenticate")
                         .content(readFileAsString("authenticate/login"))
                         .contentType(MediaType.APPLICATION_JSON)
