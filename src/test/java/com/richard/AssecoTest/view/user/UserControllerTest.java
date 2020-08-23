@@ -37,7 +37,7 @@ public class UserControllerTest {
 
         final MvcResult result = mockMvc.perform(
                 MockMvcRequestBuilders.post("/authenticate")
-                        .content(readFileAsString("authenticate/login"))
+                        .content(readFileAsString("authenticate/loginOk"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andReturn();

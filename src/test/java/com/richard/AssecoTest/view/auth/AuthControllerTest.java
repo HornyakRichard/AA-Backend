@@ -2,6 +2,8 @@ package com.richard.AssecoTest.view.auth;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,9 +31,21 @@ public class AuthControllerTest {
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/authenticate")
-                        .content(readFileAsString("authenticate/login"))
+                        .content(readFileAsString("authenticate/loginOk"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andReturn();
+    }
+
+    @Test
+    public void authenticateReturnUnauthorized() throws Exception {
+
+        final MvcResult result = mockMvc.perform(
+                MockMvcRequestBuilders.post("/authenticate")
+                        .content(readFileAsString("authenticate/loginUnauthorized"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized()).andReturn();
+        JSONAssert.assertEquals(readFileAsString("authenticate/responseUnauthorized"), result.getResponse().getContentAsString(), JSONCompareMode.NON_EXTENSIBLE);
     }
 }
